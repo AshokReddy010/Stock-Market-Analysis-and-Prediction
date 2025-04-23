@@ -1,26 +1,34 @@
-from fastapi import FastAPI # type: ignore
-from fastapi.middleware.cors import CORSMiddleware # type: ignore
+from fastapi import FastAPI  # type: ignore
+from fastapi.middleware.cors import CORSMiddleware  # type: ignore
+
+# ✅ Database setup
 from app.database import Base, engine
-from app.routes import history
+
+# ✅ IMPORTANT: Import all models before calling create_all()
+from app.models import user  # ← add all your model files here
+
+# ✅ Create DB tables now that models are known
+Base.metadata.create_all(bind=engine)
+
 # ✅ Initialize FastAPI
 app = FastAPI()
 
-# ✅ Enable CORS (must be before route inclusion)
+# ✅ Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Allow React frontend
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ✅ Create DB tables
-Base.metadata.create_all(bind=engine)
-
 # ✅ Import routers
-from app.routes import auth, user, admin, user_admin, stock,news, currency,tweets, sentiment, predictions
+from app.routes import (
+    auth, user, admin, user_admin, stock, news,
+    currency, tweets, sentiment, predictions, history
+)
 
-# ✅ Include all routers
+# ✅ Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(user.router, prefix="/api/user", tags=["User"])
 app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
