@@ -25,7 +25,7 @@ app.add_middleware(
 # ✅ Import routers
 from app.routes import (
     auth, user, admin, user_admin, stock, news,
-    currency, tweets, sentiment, predictions, history
+    currency, tweets, sentiment, predictions, history, recommendation
 )
 
 # ✅ Include routers
@@ -40,3 +40,4 @@ app.include_router(tweets.router, prefix="/api")
 app.include_router(sentiment.router, prefix="/api")
 app.include_router(predictions.router, prefix="/api")
 app.include_router(history.router, prefix="/api", tags=["History"])
+app.include_router(recommendation.router, prefix="/api", tags=["Recommendation"])

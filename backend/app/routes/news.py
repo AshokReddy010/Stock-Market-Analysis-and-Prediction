@@ -7,7 +7,7 @@ load_dotenv()
 
 router = APIRouter()
 
-NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+NEWS_API_KEY = "42b4e9bbaf3c457f9406bac6bd18ead4"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
 
 @router.get("/news")

@@ -23,8 +23,9 @@ const StockDetails = () => {
   const { symbol } = useParams();
   const [details, setDetails] = useState({});
   const [predictions, setPredictions] = useState({});
-  const [tweets, setTweets] = useState([]);
   const [sentiment, setSentiment] = useState({});
+  const [recommendation, setRecommendation] = useState(null);
+  const [news, setNews] = useState([]);
   const [range, setRange] = useState("1mo");
   const [trendData, setTrendData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,22 +36,25 @@ const StockDetails = () => {
       const [
         detailRes,
         predictionRes,
-        tweetRes,
         sentimentRes,
-        historyRes
+        historyRes,
+        newsRes,
+        recommendationRes
       ] = await Promise.all([
         axios.get(`http://localhost:8000/api/stock/details?tickers=${symbol}`),
         axios.get(`http://localhost:8000/api/predictions/${symbol}`),
-        axios.get(`http://localhost:8000/api/tweets/${symbol}`),
         axios.get(`http://localhost:8000/api/sentiment/${symbol}`),
-        axios.get(`http://localhost:8000/api/stock/history/${symbol}?range=${range}`)
+        axios.get(`http://localhost:8000/api/stock/history/${symbol}?range=${range}`),
+        axios.get(`http://localhost:8000/api/news?ticker=${symbol}`),
+        axios.get(`http://localhost:8000/api/recommendation/${symbol}`)
       ]);
 
       setDetails(detailRes.data[0]);
       setPredictions(predictionRes.data);
-      setTweets(tweetRes.data.tweets || []);
       setSentiment(sentimentRes.data);
       setTrendData(historyRes.data.history || []);
+      setNews(newsRes.data.articles || []);
+      setRecommendation(recommendationRes.data.recommendation);
     } catch (err) {
       console.error("❌ Failed to load stock details:", err);
     } finally {
@@ -133,7 +137,6 @@ const StockDetails = () => {
             ))}
           </div>
 
-
           {/* Sentiment */}
           <div className="card">
             <h3>Sentiment Analysis</h3>
@@ -161,24 +164,37 @@ const StockDetails = () => {
             </p>
           </div>
 
-          {/* Tweets */}
+          {/* News Section (replaces tweets) */}
           <div className="card">
-            <h3>Recent Tweets</h3>
-            <ul className="tweets">
-              {tweets.map((t, i) => (
-                <li key={i}>• {t}</li>
+            <h3>📰 Latest News</h3>
+            <ul className="news-list">
+              {news.map((article, index) => (
+                <li key={index} className="news-item">
+                  <a href={article.url} target="_blank" rel="noopener noreferrer">
+                    <strong>{article.title}</strong>
+                  </a>
+                  <p>{article.description}</p>
+                  <span className="news-date">{new Date(article.published_at).toLocaleString()}</span>
+                </li>
               ))}
             </ul>
           </div>
 
           {/* Final Recommendation */}
-          <div className="card recommendation">
-            <h3>📢 Recommendation</h3>
-            <p>
-              Based on current trends, prediction models, and sentiment analysis, our AI
-              suggests: <strong className={sentiment.overall?.toLowerCase()}>{sentiment.overall}</strong>
-            </p>
-          </div>
+          {recommendation && (
+            <div className="card recommendation">
+              <h3>📈 AI Recommendation</h3>
+              <p>
+                Based on current price trends and news sentiment, we suggest:{" "}
+                <strong className={
+                  recommendation === "BUY" ? "green" :
+                  recommendation === "SELL" ? "red" : "neutral"
+                }>
+                  {recommendation}
+                </strong>
+              </p>
+            </div>
+          )}
         </>
       )}
     </div>
