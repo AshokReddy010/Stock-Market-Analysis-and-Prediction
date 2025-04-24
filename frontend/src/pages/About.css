@@ -1,0 +1,24 @@
+/* About.css */
+.about-container {
+    color: white;
+    padding: 20px;
+    background: #111;
+    min-height: 100vh;
+  }
+  
+  .about-content {
+    max-width: 800px;
+    margin: auto;
+    text-align: left;
+  }
+  
+  .about-content h1 {
+    color: #ffa500;
+    margin-bottom: 20px;
+  }
+  
+  .about-content p {
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  

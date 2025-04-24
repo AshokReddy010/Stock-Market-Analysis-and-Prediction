@@ -112,10 +112,10 @@ nav a:hover {
   margin-bottom: 12px;
 }
 
-.prediction-card .rmse {
+.prediction-card .accuracy {
   margin-top: 10px;
   font-size: 14px;
-  color: white;
+  color: #00ff99;
 }
 
 .range-buttons {
@@ -184,4 +184,13 @@ nav a:hover {
   font-size: 0.85rem;
   color: #888;
   margin-top: 5px;
+}
+.disclaimer {
+  background-color: #1a1a1a;
+  color: #f1c40f;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  text-align: center;
 }

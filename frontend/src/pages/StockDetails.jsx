@@ -132,7 +132,7 @@ const StockDetails = () => {
                     <Line type="monotone" dataKey="predicted" stroke="#00ff99" dot={{ r: 2 }} />
                   </LineChart>
                 </ResponsiveContainer>
-                <p className="rmse">RMSE: {predictions[`${model}_rmse`]}</p>
+                <p className="accuracy">Accuracy: {predictions[`${model}_accuracy`]}%</p>
               </div>
             ))}
           </div>
@@ -195,6 +195,12 @@ const StockDetails = () => {
               </p>
             </div>
           )}
+          {/* Disclaimer */}
+            <div className="disclaimer">
+              <p>
+                <strong>Disclaimer:</strong> The stock price predictions provided by this platform are based on machine learning models and historical data. These predictions are purely speculative and should not be considered as financial advice. Always do your own research and consult with a financial advisor before making any investment decisions.
+              </p>
+            </div>
         </>
       )}
     </div>
