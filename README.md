@@ -47,9 +47,21 @@ A **Stock Market Analysis and Prediction Web App** built using **FastAPI** and *
 
 ## 🖼️ Screenshots
 
-<img src="C:\Users\banda\Stock-Market-Analysis-and-Prediction\frontend\src\assets\Home.png" width="100%">
-<img src="screenshots/prediction.png" width="100%">
-<img src="screenshots/news-sentiment.png" width="100%">
+### 🏠 Home Page
+<img src="frontend/src/assets/screenshots/Home.png" width="100%"/>
+
+### 🧾 About Page
+<img src="frontend/src/assets/screenshots/About.png" width="100%"/>
+
+### 💱 Currency Converter
+<img src="frontend/src/assets/screenshots/CurrencyConverter.png" width="100%"/>
+
+### 🔐 Login Page
+<img src="frontend/src/assets/screenshots/Login.png" width="100%"/>
+
+### 📝 Register Page
+<img src="frontend/src/assets/screenshots/Register.png" width="100%"/>
+
 
 ---
 
