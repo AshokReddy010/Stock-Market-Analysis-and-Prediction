@@ -62,8 +62,11 @@ A **Stock Market Analysis and Prediction Web App** built using **FastAPI** and *
 ### 📝 Register Page
 <img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Register.png" alt="Register Page" width="100%"/>
 
+### 📝 Dashboard Page
+<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Dashboard.png" alt="Register Page" width="100%"/>
 
-
+### 📝 StockDetails Page
+<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/StockDetails.png" alt="Register Page" width="100%"/>
 ---
 
 ## 🧰 Built With
