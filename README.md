@@ -48,19 +48,20 @@ A **Stock Market Analysis and Prediction Web App** built using **FastAPI** and *
 ## 🖼️ Screenshots
 
 ### 🏠 Home Page
-<img src="frontend/src/assets/screenshots/Home.png" width="100%"/>
+<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Home.png" alt="Home Page" width="100%"/>
 
 ### 🧾 About Page
-<img src="frontend/src/assets/screenshots/About.png" width="100%"/>
+<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/About.png" alt="About Page" width="100%"/>
 
 ### 💱 Currency Converter
-<img src="frontend/src/assets/screenshots/CurrencyConverter.png" width="100%"/>
+<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/CurrencyConverter.png" alt="Currency Converter" width="100%"/>
 
 ### 🔐 Login Page
-<img src="frontend/src/assets/screenshots/Login.png" width="100%"/>
+<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Login.png" alt="Login Page" width="100%"/>
 
 ### 📝 Register Page
-<img src="frontend/src/assets/screenshots/Register.png" width="100%"/>
+<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Register.png" alt="Register Page" width="100%"/>
+
 
 
 ---
