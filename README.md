@@ -47,7 +47,7 @@ A **Stock Market Analysis and Prediction Web App** built using **FastAPI** and *
 
 ## 🖼️ Screenshots
 
-<img src="screenshots/dashboard.png" width="100%">
+<img src="C:\Users\banda\Stock-Market-Analysis-and-Prediction\frontend\src\assets\Home.png" width="100%">
 <img src="screenshots/prediction.png" width="100%">
 <img src="screenshots/news-sentiment.png" width="100%">
 
