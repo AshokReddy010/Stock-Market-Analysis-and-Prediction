@@ -10,8 +10,31 @@ router = APIRouter()
 
 # Get all users
 @router.get("/", response_model=List[UserResponse])
-def get_users(db: Session = Depends(get_db), current_admin=Depends(get_current_admin)):
-    return db.query(User).all()
+@router.get("/")
+def get_users(
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin),
+    search: str = "",
+    page: int = 1,
+    limit: int = 5
+):
+    query = db.query(User)
+
+    if search:
+        query = query.filter(
+            or_(
+                User.username.ilike(f"%{search}%"),
+                User.email.ilike(f"%{search}%")
+            )
+        )
+
+    total = query.count()
+    users = query.offset((page - 1) * limit).limit(limit).all()
+
+    return {
+        "users": users,
+        "total_pages": (total // limit) + (1 if total % limit else 0)
+    }
 
 # Get user by ID
 @router.get("/{user_id}", response_model=UserResponse)
@@ -37,9 +60,17 @@ def create_user(user: UserCreate, db: Session = Depends(get_db), current_admin=D
     db.refresh(new_user)
     return new_user
 
-# Update user (including role)
+from fastapi import Request  # Add at the top
+
 @router.put("/{user_id}", response_model=UserResponse)
-def update_user(user_id: int, updated_data: dict, db: Session = Depends(get_db), current_admin=Depends(get_current_admin)):
+async def update_user(
+    user_id: int,
+    request: Request,
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
+):
+    updated_data = await request.json()
+
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -47,12 +78,18 @@ def update_user(user_id: int, updated_data: dict, db: Session = Depends(get_db),
     if 'password' in updated_data:
         updated_data['hashed_password'] = hash_password(updated_data.pop('password'))
 
+    if 'role' in updated_data:
+        # Map role string to is_admin boolean
+        updated_data['is_admin'] = updated_data.pop('role') == "Admin"
+
     for key, value in updated_data.items():
-        setattr(user, key, value)
+        if hasattr(user, key):
+            setattr(user, key, value)
 
     db.commit()
     db.refresh(user)
     return user
+
 
 # Delete user
 @router.delete("/{user_id}")
