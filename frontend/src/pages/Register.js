@@ -78,10 +78,7 @@ const Register = () => {
           <div className="register-footer">
          <p>Already have an account? <Link to="/login">Login</Link></p>
         </div>
-        <div className="home-link">
-        <Link to="/">Home</Link>
-        </div>
-
+        
         </form>
       </div>
     </div>

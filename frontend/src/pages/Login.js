@@ -79,10 +79,7 @@ const Login = () => {
            <Link to="/register">Register</Link> | <a href="#">Forgot your password?</a>
           </p>
           </div>
-          <div className="home-link">
-           <Link to="/">Home</Link>
-          </div>
-
+          
         </form>
       </div>
     </div>
