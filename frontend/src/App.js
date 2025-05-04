@@ -1,15 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/;
 import StockDetails from "./pages/StockDetails"; 
+import StockDetails from "./pages/StockDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import CurrencyConverter from "./pages/CurrencyConverter";
 import React from 'react';
 import About from './pages/About';
 import Navbar from "./components/Navbar";  
-import Contact from "./pages/Contact";     
+import Contact from "./pages/Contact";
+import AdminPanel from "./pages/AdminPanel";
+import PrivateAdminRoute from "./components/PrivateAdminRoute";
 
 function App() {
   return (
@@ -23,6 +26,20 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         {/* ✅ Protected pages */}
+        {/* Admin-protected route */}
+        <Route
+          path="/admin"
+          element={
+            <PrivateAdminRoute>
+              <AdminPanel />
+            </PrivateAdminRoute>
+          }
+        />
+
+        {/* Unauthorized fallback */}
+        <Route path="/unauthorized" element={<h2>Unauthorized Access</h2>} />
+
+        {/* User-protected routes */}
         <Route
           path="/dashboard"
           element={

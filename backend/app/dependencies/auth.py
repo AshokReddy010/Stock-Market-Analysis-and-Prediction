@@ -6,8 +6,10 @@ from app.database import SessionLocal
 from app.models.user import User
 from app.utils.auth import SECRET_KEY, ALGORITHM
 
+# OAuth2 scheme for extracting token from Authorization header
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
+# Dependency to get a database session
 def get_db():
     db = SessionLocal()
     try:
@@ -15,6 +17,7 @@ def get_db():
     finally:
         db.close()
 
+# Dependency to get the current logged-in user from JWT token
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -34,6 +37,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         raise credentials_exception
     return user
 
+# Dependency to get the current user, but only allow admins
 def get_current_admin(current_user: User = Depends(get_current_user)):
     if not current_user.is_admin:
         raise HTTPException(
