@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +32,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/api/auth/register", {
+          await axios.post("http://localhost:8000/api/auth/register", {
         username: formData.username,
         email: formData.email,
         password: formData.password
@@ -74,8 +76,9 @@ const Register = () => {
           <button type="submit">REGISTER</button>
 
           <div className="register-footer">
-            <p>Already have an account? <a href="/">Login</a></p>
-          </div>
+         <p>Already have an account? <Link to="/login">Login</Link></p>
+        </div>
+        
         </form>
       </div>
     </div>

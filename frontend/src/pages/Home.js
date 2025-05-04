@@ -13,11 +13,11 @@ const Home = () => {
 
   return (
     <div className="home-container">
+     {/*
       <header className="navbar">
         <img src={logo} alt="ADFG Logo" className="logo" />
         <nav>
-          {/* 👇 Home link goes to dashboard if logged in */}
-
+          
           <Link to={token ? "/dashboard" : "/"}>Home</Link>
           <Link to="/about">About</Link>
           <Link to="/currency-converter">Currency Converter</Link>
@@ -25,6 +25,7 @@ const Home = () => {
           <Link to="/login" className="login-btn">Login</Link>
         </nav>
       </header>
+      */}
 
       <section className="hero">
         <div className="hero-overlay">

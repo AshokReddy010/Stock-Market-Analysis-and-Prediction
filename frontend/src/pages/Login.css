@@ -79,8 +79,16 @@
     font-size: 0.9rem;
   }
   
-  .login-footer a {
-    color: #ffa500;
-    text-decoration: none;
-  }
+  .login-footer a,
+.home-link a {
+  color: #ffa500;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-footer a:hover,
+.home-link a:hover {
+  text-decoration: underline;
+}
+
   

@@ -72,8 +72,16 @@
     font-size: 0.9rem;
   }
   
-  .register-footer a {
-    color: #ffa500;
-    text-decoration: none;
-  }
+  .register-footer a,
+.home-link a {
+  color: #ffa500;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-footer a:hover,
+.home-link a:hover {
+  text-decoration: underline;
+}
+
   

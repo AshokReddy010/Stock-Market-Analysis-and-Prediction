@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";  
+
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -73,8 +75,11 @@ const Login = () => {
           <button type="submit">LOGIN</button>
 
           <div className="login-footer">
-            <p><a href="/register">Register</a> | <a href="#">Forgot your password?</a></p>
+          <p>
+           <Link to="/register">Register</Link> | <a href="#">Forgot your password?</a>
+          </p>
           </div>
+          
         </form>
       </div>
     </div>
