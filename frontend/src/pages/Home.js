@@ -13,19 +13,21 @@ const Home = () => {
 
   return (
     <div className="home-container">
-     {/*
       <header className="navbar">
         <img src={logo} alt="ADFG Logo" className="logo" />
-        <nav>
-          
-          <Link to={token ? "/dashboard" : "/"}>Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/currency-converter">Currency Converter</Link>
-          <Link to="/contact">Contact Us</Link>
-          <Link to="/login" className="login-btn">Login</Link>
-        </nav>
+        <div className="nav-links">
+          <nav>
+            <Link to={token ? "/dashboard" : "/"}>Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/currency-converter">Currency Converter</Link>
+            <Link to="/contact">Contact Us</Link>
+          </nav>
+          <div className="auth-buttons">
+            <Link to="/login" className="login-btn">Login</Link>
+            <Link to="/register" className="register-btn">Register</Link>
+          </div>
+        </div>
       </header>
-      */}
 
       <section className="hero">
         <div className="hero-overlay">

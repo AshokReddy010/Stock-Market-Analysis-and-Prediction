@@ -98,12 +98,12 @@ const CurrencyConverter = () => {
         <nav>
           <Link to={token ? "/dashboard" : "/"}>Home</Link>
           <Link to="/about">About</Link>
-          <Link to="/currency-converter">Currency Converter</Link>
           <Link to="/contact">Contact Us</Link>
           {token ? (
             <button className="logout-btn" onClick={handleLogout}>Logout</button>
           ) : (
-            <Link to="/login" className="login-btn">Login</Link>
+            <><Link to="/login" className="login-btn">Login</Link>
+            <Link to="/register" className="register-btn">Register</Link></>
           )}
         </nav>
       </header>

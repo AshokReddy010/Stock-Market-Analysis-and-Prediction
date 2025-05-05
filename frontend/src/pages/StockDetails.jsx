@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate  } from "react-router-dom";
 import axios from "axios";
 import "./StockDetails.css";
 import logo from "../assets/logo.png";
@@ -21,6 +21,8 @@ const RANGE_LABELS = {
 
 const StockDetails = () => {
   const { symbol } = useParams();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const [details, setDetails] = useState({});
   const [predictions, setPredictions] = useState({});
   const [sentiment, setSentiment] = useState({});
@@ -29,7 +31,10 @@ const StockDetails = () => {
   const [range, setRange] = useState("1mo");
   const [trendData, setTrendData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   const fetchAll = async () => {
     setLoading(true);
     try {
@@ -70,11 +75,19 @@ const StockDetails = () => {
     <div className="stock-details-container">
       <header className="navbar">
         <img src={logo} alt="ADFG Logo" className="logo" />
-        <nav>
-          <Link to="/dashboard">Home</Link>
-          <Link to="/currency-converter">Currency Converter</Link>
-          <Link to="/contact">Contact Us</Link>
-        </nav>
+        <div className="nav-links">
+          <nav>
+            <Link to="/dashboard">Home</Link>
+            <Link to="/currency-converter">Currency Converter</Link>
+            <Link to="/contact">Contact Us</Link>
+            <Link to="/about">About</Link>
+          </nav>
+          <div className="auth-buttons">
+            {token && (
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            )}
+          </div>
+        </div>
       </header>
 
       <h2 className="details-title">{symbol.toUpperCase()} — Full Stock Analysis</h2>

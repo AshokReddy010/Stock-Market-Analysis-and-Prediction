@@ -22,16 +22,29 @@
     text-decoration: none;
     font-weight: bold;
   }
-  
-  .login-btn {
+  .login-btn,
+.register-btn {
+  background-color: #f39c12;     /* Vibrant orange */
+  color: #ffffff !important;     /* Force white text */
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: none;
+  font-size: 15px;
+  transition: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+
+  .login-btn:hover,
+  .register-btn:hover {
     background-color: #f39c12;
-    color: white; /* 🔥 This makes the text white */
-    font-weight: bold;
-    padding: 6px 14px;
-    border-radius: 4px;
-    text-decoration: none;
+    color: #fff;
+    cursor: default;
   }
-  
+
   
   .hero {
     background-image: url("../assets/stock-bg.jpg");
@@ -163,5 +176,18 @@
     padding: 20px;
     background-color: #000;
     color: #aaa;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  nav {
+    display: flex;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    margin-left: 20px;
   }
   

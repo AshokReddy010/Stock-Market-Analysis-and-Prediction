@@ -1,18 +1,39 @@
 import React from 'react';
 import './About.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 export default function About() {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <div className="about-container">
       <header className="navbar">
         <img src={logo} alt="App Logo" className="logo" />
-        <nav>
-          <Link to="/dashboard">Home</Link>
-          <Link to="/currency-converter">Currency Converter</Link>
-          <Link to="/about">About</Link>
-        </nav>
+        <div className="nav-links">
+          <nav>
+            <Link to={token ? "/dashboard" : "/"}>Home</Link>
+            <Link to="/currency-converter">Currency Converter</Link>
+            <Link to="/contact">Contact Us</Link>
+            <Link to="/about">About</Link>
+          </nav>
+          <div className="auth-buttons">
+            {!token ? (
+              <>
+                <Link to="/login" className="login-btn">Login</Link>
+                <Link to="/register" className="register-btn">Register</Link>
+              </>
+            ) : (
+              <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            )}
+          </div>
+        </div>
       </header>
 
       <main className="about-content">
