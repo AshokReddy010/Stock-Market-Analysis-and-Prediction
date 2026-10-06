@@ -37,28 +37,20 @@ const Home = () => {
       </section>
 
       <section className="stats-section">
-        <div className="stat"><h2>10K+</h2><p>Worldwide Users</p></div>
-        <div className="stat"><h2>100%</h2><p>Secure</p></div>
-        <div className="stat"><h2>3,400+</h2><p>Companies</p></div>
+        <div className="stat"><h2>3</h2><p>Forecasting Models</p></div>
+        <div className="stat"><h2>7 Days</h2><p>Forecast Horizon</p></div>
+        <div className="stat"><h2>2</h2><p>Markets: NASDAQ and NSE</p></div>
       </section>
 
       <section className="services-section">
-        <h2>OUR SERVICES</h2>
+        <h2>WHAT IT DOES</h2>
         <div className="services">
-          <div>✅ Trusted</div>
-          <div>📈 Accurate Predictions</div>
-          <div>👨‍💼 Qualified Employees</div>
-          <div>💰 Earn Money</div>
-          <div>🔒 Secure</div>
-          <div>🕒 Real Time Stocks</div>
-        </div>
-      </section>
-
-      <section className="clients-section">
-        <h2>THE CLIENTS WE WORK FOR</h2>
-        <div className="clients">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" />
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" />
+          <div>🕒 Live Stock Prices</div>
+          <div>📈 7-Day Price Forecasts</div>
+          <div>📰 News Sentiment Analysis</div>
+          <div>✅ Buy, Sell or Hold Signal</div>
+          <div>💱 Currency Converter</div>
+          <div>🔒 Secure Sign-In</div>
         </div>
       </section>
 

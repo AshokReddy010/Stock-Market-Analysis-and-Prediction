@@ -145,7 +145,7 @@ const StockDetails = () => {
                     <Line type="monotone" dataKey="predicted" stroke="#00ff99" dot={{ r: 2 }} />
                   </LineChart>
                 </ResponsiveContainer>
-                <p className="accuracy">Accuracy: {predictions[`${model}_accuracy`]}%</p>
+                <p className="accuracy">Model fit (R²): {predictions[`${model}_accuracy`]}%</p>
               </div>
             ))}
           </div>
