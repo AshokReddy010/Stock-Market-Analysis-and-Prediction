@@ -1,123 +1,80 @@
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/AshokReddy010/Stock-Market-Analysis-and-Prediction)
-![GitHub last commit](https://img.shields.io/github/last-commit/AshokReddy010/Stock-Market-Analysis-and-Prediction)
-![GitHub language count](https://img.shields.io/github/languages/count/AshokReddy010/Stock-Market-Analysis-and-Prediction)
-![GitHub stars](https://img.shields.io/github/stars/AshokReddy010/Stock-Market-Analysis-and-Prediction?style=social)
-![GitHub forks](https://img.shields.io/github/forks/AshokReddy010/Stock-Market-Analysis-and-Prediction?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/AshokReddy010/Stock-Market-Analysis-and-Prediction?style=social)
+# Stock Market Analysis and Prediction Web App
 
-# 📈 Stock Market Prediction Web App (Real-Time + ML)
+A full-stack web app that shows live prices for NASDAQ and NSE stocks, forecasts the next 7 days with three models, reads the sentiment of recent financial news, and combines the two into a buy, sell or hold signal.
 
-A **Stock Market Analysis and Prediction Web App** built using **FastAPI** and **React**. The platform fetches **real-time stock data**, performs **7-day price forecasting** using **ARIMA, LSTM, and Linear Regression**, and uses **real financial news sentiment analysis** to recommend BUY/SELL/HOLD actions. Admins can manage users and trigger emails. The system supports **NASDAQ and NSE** stocks.
+Built with FastAPI, React and SQLite.
 
----
+<img src="frontend/src/assets/StockDetails.png" alt="Stock details page with forecasts, sentiment and recommendation" width="640">
 
-## 📋 Table of Contents
+## What it does
 
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Built With](#built-with)
-- [Installation](#installation)
-- [Contributors](#contributors)
-- [License](#license)
+- **Live prices and trend charts** for NASDAQ and NSE stocks, from yfinance.
+- **7-day forecasts** from three models, shown side by side: linear regression, ARIMA and LSTM.
+- **News sentiment:** recent headlines from NewsAPI, each scored as positive, neutral or negative.
+- **Buy, sell or hold signal** from the forecast trend and the news sentiment together.
+- **Accounts:** register and sign in with JWT, manage a profile, and an admin area to manage users.
+- **Currency converter** with live exchange rates.
 
----
+## How it works
 
-## 🚀 Features
+```
+React front end  →  FastAPI back end  →  yfinance (prices)
+                                      →  NewsAPI (headlines)
+                                      →  SQLite (user accounts)
+```
 
-### 👤 User Features
-- Register and Login with JWT
-- Check real-time stock prices (NASDAQ + NSE)
-- View interactive trend charts
-- Predict next 7-day prices using 3 ML models (ARIMA, LSTM, Linear Regression)
-- Analyze sentiment from financial news headlines
-- Get AI-generated investment recommendations
-- Currency converter with live exchange rates
-- Profile management
-- Download stock tickers list
-- Fully responsive dashboard
+| Step | Detail |
+|:--|:--|
+| Data | Five years of daily closing prices per stock |
+| Linear regression | Uses the previous two closes and a 5-day rolling mean |
+| ARIMA | Order (5, 1, 0) |
+| LSTM | Two layers, reading 30-day windows |
+| Sentiment | Each headline scored with TextBlob |
+| Signal | Buy when the forecast trends up and positive headlines outnumber negative ones, sell when both point down, otherwise hold |
 
-### 🛠 Admin Features
-- All user capabilities
-- View and manage all users (CRUD)
-- Manually trigger notification emails
+## Screenshots
 
----
+| Dashboard | Currency converter |
+|:--|:--|
+| ![Dashboard](frontend/src/assets/Dashboard.png) | ![Currency converter](frontend/src/assets/CurrencyConverter.png) |
 
+## Run it locally
 
-## 🖼️ Screenshots
+You need Python 3.10 and Node.js, plus a free API key from [newsapi.org](https://newsapi.org).
 
-### 🏠 Home Page
-<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Home.png" alt="Home Page" width="100%"/>
+**Back end**
 
-### 🧾 About Page
-<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/About.png" alt="About Page" width="100%"/>
-
-### 💱 Currency Converter
-<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/CurrencyConverter.png" alt="Currency Converter" width="100%"/>
-
-### 🔐 Login Page
-<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Login.png" alt="Login Page" width="100%"/>
-
-### 📝 Register Page
-<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Register.png" alt="Register Page" width="100%"/>
-
-### 📝 Dashboard Page
-<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/Dashboard.png" alt="Register Page" width="100%"/>
-
-### 📝 StockDetails Page
-<img src="https://raw.githubusercontent.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/main/frontend/src/assets/StockDetails.png" alt="Register Page" width="100%"/>
----
-
-## 🧰 Built With
-
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?logo=fastapi)
-![React](https://img.shields.io/badge/React-20232A?logo=react)
-![SQLite](https://img.shields.io/badge/SQLite-07405E?logo=sqlite)
-![YFinance](https://img.shields.io/badge/yfinance-yellow)
-![NewsAPI](https://img.shields.io/badge/NewsAPI-orange)
-![Keras](https://img.shields.io/badge/Keras-FF0000?logo=keras)
-![Pandas](https://img.shields.io/badge/pandas-150458?logo=pandas)
-![Scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikit-learn)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-9999FF?logo=matplotlib)
-
----
-
-## ⚙️ Installation
-
-### 🖥 Backend (FastAPI)
 ```bash
 cd backend
 python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS/Linux
-source venv/bin/activate
-
+venv\Scripts\activate        # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
-### 🌐 Frontend (React)
+Before starting the back end, create a file named `.env` inside the `backend` folder with one line:
+
+```
+NEWS_API_KEY=your_key
+```
+
+**Front end**
+
 ```bash
 cd frontend
 npm install
 npm start
 ```
 
----
+The app opens at `http://localhost:3000` and talks to the API at `http://localhost:8000`.
 
-## 🤝 Contributors
+## Limitations and next steps
 
-- [@AshokReddy010](https://github.com/AshokReddy010)
-- ASHOK REDDY BHIMAVARAPU
----
+- The model fit shown on the stock page (R²) is measured on the same history the models learn from. The next step is walk-forward validation on held-out data, reported as error in dollars.
+- Models are retrained on each request. Training once and caching would make pages load much faster.
+- TextBlob is a general-purpose sentiment scorer. A model trained on financial text would read headlines better.
+- This is a learning project, not investment advice.
 
-## 📜 License
+## Author
 
-This project is licensed under the [MIT License].
-
----
-
-> ⚠️ **Disclaimer**: Stock predictions are based on machine learning models and real-time news sentiment analysis. This application does not provide financial advice. Always consult a financial expert before making investment decisions.
+Ashok Reddy Bhimavarapu · [Portfolio](https://ashokreddy010.github.io) · [LinkedIn](https://www.linkedin.com/in/ashokreddy1)
