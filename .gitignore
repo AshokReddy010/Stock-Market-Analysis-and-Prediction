@@ -18,3 +18,12 @@ dist/
 .cache/
 *.lock
 .DS_Store
+# local data and secrets
+backend/app/stockapp.db
+backend/.env
+.env
+frontend/build/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+!backend/.env.example

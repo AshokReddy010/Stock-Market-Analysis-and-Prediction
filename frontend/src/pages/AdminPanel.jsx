@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API } from "../api";
 import "./AdminPanel.css";
 
 const AdminPanel = () => {
@@ -22,7 +23,7 @@ const AdminPanel = () => {
   const fetchUsers = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/admin/users?search=${search}&page=${page}&limit=${limit}`,
+        `${API}/api/admin/users?search=${search}&page=${page}&limit=${limit}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setUsers(res.data.users || []);
@@ -54,7 +55,7 @@ const AdminPanel = () => {
         is_admin: formData.role === "Admin"
       };
       await axios.put(
-        `http://localhost:8000/api/admin/users/${editingUser}`,
+        `${API}/api/admin/users/${editingUser}`,
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -68,7 +69,7 @@ const AdminPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:8000/api/admin/users/${id}`, {
+      await axios.delete(`${API}/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();
@@ -94,7 +95,7 @@ const AdminPanel = () => {
     };
 
     try {
-      await axios.post("http://localhost:8000/api/admin/users", payload, {
+      await axios.post(`${API}/api/admin/users`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();

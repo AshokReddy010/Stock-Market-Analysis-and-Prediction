@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Query
-import requests
 from datetime import datetime, timedelta
+
+import requests
+from fastapi import APIRouter, Query
 
 router = APIRouter()
 

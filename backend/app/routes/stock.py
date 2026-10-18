@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Query # type: ignore
 from typing import List
-import yfinance as yf
+
 import numpy as np
+import yfinance as yf
+from fastapi import APIRouter, Query  # type: ignore
 
 router = APIRouter()
 

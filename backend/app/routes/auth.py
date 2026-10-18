@@ -1,37 +1,28 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from jose import JWTError
+from sqlalchemy.orm import Session
 
-from app.database import SessionLocal
+from app.database import get_db
 from app.models.user import User
 from app.schemas.user import UserCreate, UserResponse
-from app.utils.auth import hash_password, verify_password, create_access_token
+from app.utils.auth import create_access_token, hash_password, verify_password
 
 router = APIRouter()
-
-
-# Dependency to get DB session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 # ✅ Register a new user
 @router.post("/register", response_model=UserResponse)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.email == user.email).first()
-    if db_user:
+    if db.query(User).filter(User.email == user.email).first():
         raise HTTPException(status_code=400, detail="Email already registered")
+    if db.query(User).filter(User.username == user.username).first():
+        raise HTTPException(status_code=400, detail="Username already taken")
 
     new_user = User(
         email=user.email,
         username=user.username,
         hashed_password=hash_password(user.password),
-        is_admin=user.is_admin if hasattr(user, "is_admin") else False
+        is_admin=False,
     )
     db.add(new_user)
     db.commit()

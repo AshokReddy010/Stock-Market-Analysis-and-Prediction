@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+
 from app.dependencies.auth import get_current_admin
 
 router = APIRouter()

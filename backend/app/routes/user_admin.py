@@ -1,10 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException # type: ignore
-from sqlalchemy.orm import Session # type: ignore
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException, Request  # type: ignore
+from sqlalchemy import or_
+from sqlalchemy.orm import Session  # type: ignore
+
 from app.dependencies.auth import get_current_admin, get_db
 from app.models.user import User
-from app.schemas.user import UserResponse, UserCreate
+from app.schemas.user import AdminUserCreate, UserResponse
 from app.utils.auth import hash_password
-from typing import List
 
 router = APIRouter()
 
@@ -46,7 +49,7 @@ def get_user(user_id: int, db: Session = Depends(get_db), current_admin=Depends(
 
 # Create a new user (Admin use only)
 @router.post("/", response_model=UserResponse)
-def create_user(user: UserCreate, db: Session = Depends(get_db), current_admin=Depends(get_current_admin)):
+def create_user(user: AdminUserCreate, db: Session = Depends(get_db), current_admin=Depends(get_current_admin)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -59,8 +62,6 @@ def create_user(user: UserCreate, db: Session = Depends(get_db), current_admin=D
     db.commit()
     db.refresh(new_user)
     return new_user
-
-from fastapi import Request  # Add at the top
 
 @router.put("/{user_id}", response_model=UserResponse)
 async def update_user(

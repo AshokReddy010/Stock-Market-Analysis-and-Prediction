@@ -1,6 +1,7 @@
 # app/routes/history.py
 
 from fastapi import APIRouter, Query
+
 from app.routes.utils import get_price_history
 
 router = APIRouter()

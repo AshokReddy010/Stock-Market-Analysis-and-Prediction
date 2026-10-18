@@ -2,7 +2,9 @@
 
 A full-stack web app that shows live prices for NASDAQ and NSE stocks, forecasts the next 7 days with three models, reads the sentiment of recent financial news, and combines the two into a buy, sell or hold signal.
 
-Built with FastAPI, React and SQLite.
+Built with FastAPI, React and SQLite. [![ci](https://github.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/actions/workflows/ci.yml/badge.svg)](https://github.com/AshokReddy010/Stock-Market-Analysis-and-Prediction/actions/workflows/ci.yml)
+
+> Educational project. The signal is a demonstration of combining a forecast with sentiment, not investment advice.
 
 <img src="frontend/src/assets/StockDetails.png" alt="Stock details page with forecasts, sentiment and recommendation" width="640">
 
@@ -26,6 +28,7 @@ React front end  →  FastAPI back end  →  yfinance (prices)
 | Step | Detail |
 |:--|:--|
 | Data | Five years of daily closing prices per stock |
+| Honest evaluation | Each model is refit without the last 7 trading days and scored on them (mean absolute percentage error), next to the "price stays the same" baseline. In-sample R² is near 99% for any model on prices, so it is not shown as accuracy. |
 | Linear regression | Uses the previous two closes and a 5-day rolling mean |
 | ARIMA | Order (5, 1, 0) |
 | LSTM | Two layers, reading 30-day windows |
@@ -37,6 +40,22 @@ React front end  →  FastAPI back end  →  yfinance (prices)
 | Dashboard | Currency converter |
 |:--|:--|
 | ![Dashboard](frontend/src/assets/Dashboard.png) | ![Currency converter](frontend/src/assets/CurrencyConverter.png) |
+
+## Run it with Docker
+
+```bash
+docker compose up --build        # web on http://localhost:3000, API on http://localhost:8000/docs
+```
+
+Set `JWT_SECRET` (and optionally `NEWS_API_KEY`) in your shell or a `.env` file first. The default image skips TensorFlow to stay small, so the LSTM forecast is hidden; build the API with `--build-arg FULL=1` to include it.
+
+## Engineering notes
+
+- **Configuration from the environment.** `JWT_SECRET`, `DATABASE_URL`, `CORS_ORIGINS` and `NEWS_API_KEY` are read from environment variables (`backend/.env.example` lists them). The API refuses to start in production without a secret. An earlier version had a signing key in the source; it has been removed, and tokens signed with it are no longer accepted.
+- **Accounts.** Self-registration can no longer request admin rights (only an existing admin can create one), usernames must be unique, and passwords need at least 8 characters.
+- **No HTTP calls to itself.** The recommendation and sentiment endpoints call the prediction and news functions directly instead of requesting `localhost:8000`, so they work behind any host or port.
+- **Fixes found by the new tests.** Admin user search crashed because a SQLAlchemy import was missing.
+- **Tests and CI.** `backend/tests` covers registration, login, token tampering, admin-only routes, the forecast and backtest code on synthetic prices, headline scoring and the buy/hold/sell rule. CI runs ruff and pytest, builds the React app, and builds both Docker images.
 
 ## Run it locally
 

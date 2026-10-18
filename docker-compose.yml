@@ -1,0 +1,21 @@
+# docker compose up --build   then open http://localhost:3000
+services:
+  api:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      NEWS_API_KEY: ${NEWS_API_KEY:-}
+      CORS_ORIGINS: http://localhost:3000
+      DATABASE_URL: sqlite:////data/stockapp.db
+    volumes: ["appdata:/data"]
+    user: root
+  web:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: http://localhost:8000
+    ports: ["3000:80"]
+    depends_on: [api]
+volumes:
+  appdata:

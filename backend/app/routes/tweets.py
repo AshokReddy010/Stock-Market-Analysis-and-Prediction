@@ -1,6 +1,7 @@
 # routes/tweets.py
-from fastapi import APIRouter # type: ignore
 import random
+
+from fastapi import APIRouter  # type: ignore
 
 router = APIRouter()
 

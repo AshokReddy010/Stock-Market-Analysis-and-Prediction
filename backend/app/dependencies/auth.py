@@ -2,20 +2,13 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
-from app.database import SessionLocal
+
+from app.database import get_db  # noqa: F401 - re-exported for the routes that import it from here
 from app.models.user import User
-from app.utils.auth import SECRET_KEY, ALGORITHM
+from app.utils.auth import ALGORITHM, SECRET_KEY
 
 # OAuth2 scheme for extracting token from Authorization header
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
-
-# Dependency to get a database session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 # Dependency to get the current logged-in user from JWT token
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
@@ -29,8 +22,8 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
-    except JWTError:
-        raise credentials_exception
+    except JWTError as err:
+        raise credentials_exception from err
 
     user = db.query(User).filter(User.username == username).first()
     if user is None:

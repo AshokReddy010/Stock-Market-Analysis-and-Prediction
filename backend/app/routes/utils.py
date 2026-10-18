@@ -2,6 +2,7 @@
 
 import yfinance as yf
 
+
 def get_price_history(symbol: str, range: str):
     range_map = {
         "5d": ("5d", "1d"),       # 1 Week trend = 5 days @ 1-day interval

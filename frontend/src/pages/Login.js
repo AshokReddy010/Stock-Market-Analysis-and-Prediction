@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API } from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 import logo from "../assets/logo.png";
@@ -19,7 +20,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:8000/api/auth/login", new URLSearchParams({
+      const response = await axios.post(`${API}/api/auth/login`, new URLSearchParams({
         username: formData.username,
         password: formData.password
       }), {

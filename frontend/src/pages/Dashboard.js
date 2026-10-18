@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import logo from "../assets/logo.png";
 import axios from "axios";
+import { API } from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
@@ -25,7 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/stock/details", {
+        const response = await axios.get(`${API}/api/stock/details`, {
           params: { tickers },
           paramsSerializer: params =>
             params.tickers.map(t => `tickers=${encodeURIComponent(t)}`).join("&"),

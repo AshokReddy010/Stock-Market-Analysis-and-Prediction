@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API } from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import "./Register.css";
 import logo from "../assets/logo.png";
@@ -31,7 +32,7 @@ const Register = () => {
     }
 
     try {
-      await axios.post("http://localhost:8000/api/auth/register", {
+      await axios.post(`${API}/api/auth/register`, {
         username: formData.username,
         email: formData.email,
         password: formData.password
@@ -41,7 +42,10 @@ const Register = () => {
       setTimeout(() => navigate("/"), 2000); // Redirect after 2s
 
     } catch (err) {
-      const message = err.response?.data?.detail || "Registration failed";
+      const detail = err.response?.data?.detail;
+      const message = Array.isArray(detail)
+        ? detail.map((d) => d.msg.replace(/^Value error, /, "")).join(". ")
+        : detail || "Registration failed";
       setError(message);
     }
   };

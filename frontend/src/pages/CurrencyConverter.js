@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API } from "../api";
 import "./CurrencyConverter.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
@@ -55,7 +56,7 @@ const CurrencyConverter = () => {
     setError("");
 
     try {
-      const response = await axios.get("http://localhost:8000/api/currency/convert", {
+      const response = await axios.get(`${API}/api/currency/convert`, {
         params: {
           from_currency: fromCurrency,
           to_currency: toCurrency,

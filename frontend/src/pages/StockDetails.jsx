@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate  } from "react-router-dom";
 import axios from "axios";
+import { API } from "../api";
 import "./StockDetails.css";
 import logo from "../assets/logo.png";
 
@@ -46,12 +47,12 @@ const StockDetails = () => {
         newsRes,
         recommendationRes
       ] = await Promise.all([
-        axios.get(`http://localhost:8000/api/stock/details?tickers=${symbol}`),
-        axios.get(`http://localhost:8000/api/predictions/${symbol}`),
-        axios.get(`http://localhost:8000/api/sentiment/${symbol}`),
-        axios.get(`http://localhost:8000/api/stock/history/${symbol}?range=${range}`),
-        axios.get(`http://localhost:8000/api/news?ticker=${symbol}`),
-        axios.get(`http://localhost:8000/api/recommendation/${symbol}`)
+        axios.get(`${API}/api/stock/details?tickers=${symbol}`),
+        axios.get(`${API}/api/predictions/${symbol}`),
+        axios.get(`${API}/api/sentiment/${symbol}`),
+        axios.get(`${API}/api/stock/history/${symbol}?range=${range}`),
+        axios.get(`${API}/api/news?ticker=${symbol}`),
+        axios.get(`${API}/api/recommendation/${symbol}`)
       ]);
 
       setDetails(detailRes.data[0]);
@@ -145,7 +146,14 @@ const StockDetails = () => {
                     <Line type="monotone" dataKey="predicted" stroke="#00ff99" dot={{ r: 2 }} />
                   </LineChart>
                 </ResponsiveContainer>
-                <p className="accuracy">Model fit (R²): {predictions[`${model}_accuracy`]}%</p>
+                {predictions.backtest && predictions.backtest[`${model}_mape`] != null ? (
+                  <p className="accuracy">
+                    Last-7-day backtest error: {predictions.backtest[`${model}_mape`]}% (no-change baseline:{" "}
+                    {predictions.backtest.naive_mape}%)
+                  </p>
+                ) : (
+                  <p className="accuracy">Not available on this server</p>
+                )}
               </div>
             ))}
           </div>
